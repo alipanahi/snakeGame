@@ -36,7 +36,7 @@ button{
     width: 400px;
     height: 400px;
     margin: 0 auto;
-    margin-top: 70px;
+    margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -62,3 +62,12 @@ button{
 p{
     margin-bottom: 0;
 }
+.radio{
+    left: 50%;
+    
+    position: absolute;
+    transform: translateX(-50%);
+    margin: 0 auto;
+    margin-top: 50px;
+}
+

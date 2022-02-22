@@ -6,13 +6,16 @@ const squares = []
 const width = 20 // the width of our game
 let timer  = 0
 let intervalTime = 1000
+const difficultyTimer = 2000
 let tail = 0
 let direction = width // by default the snake goes down
 let appleIndex = 0
 let dangerIndex = 0
 let score = 0
-const dangerLimit = 2
+const dangerLimit = 5
 let dangerList = []
+let difficulty = false
+
 for(let i = 0; i < 400; i++){
     let squar = document.createElement('div')
     squar.classList.add('default-squar')
@@ -26,12 +29,15 @@ for(let i = 0; i < 400; i++){
 currentSnake.forEach(index => squares[index].classList.add('snake'))
 squares[currentSnake[0]].classList.add('snake-head')
 start.addEventListener('click',startGame)
+
 function startGame(){
     currentSnake.forEach(index => squares[index].classList.remove('snake'))
     squares[currentSnake[0]].classList.remove('snake-head')
     squares[appleIndex].classList.remove('apple')
     dangerList.forEach(index => squares[index].classList.remove('danger'))
-
+    if(document.getElementById('hard').checked){
+        difficulty = true
+    }
     clearInterval(timer)
     currentSnake = [49,29,9]
     dangerList = []
@@ -62,9 +68,14 @@ function move()
     
     if(squares[currentSnake[0]].classList.contains('apple')){//hit the apple
         squares[currentSnake[0]].classList.remove('apple')
+        squares[currentSnake[0]].style=''
         squares[tail].classList.add('snake')
         currentSnake.push(tail)
-        score++
+        if(difficulty){
+            score+=2
+        }else{
+            score++
+        }
         generateApple()
         if(score % dangerLimit === 0){//for every 5 scores, add one danger point
             generateDangerPoint()
@@ -100,6 +111,9 @@ function generateApple(){
         appleIndex = Math.floor(Math.random() * 400 )
     }while(squares[appleIndex].classList.contains('snake'))
     squares[appleIndex].classList.add('apple')
+    if(difficulty){
+        let hideId = setTimeout(hideApple,difficultyTimer)
+    }
 }
 function generateDangerPoint(){
     do{
@@ -110,4 +124,7 @@ function generateDangerPoint(){
         )
     squares[dangerIndex].classList.add('danger')
     dangerList.push(dangerIndex)
+}
+function hideApple(){
+    squares[appleIndex].style.background = 'white'
 }
