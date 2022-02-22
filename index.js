@@ -9,9 +9,10 @@ let intervalTime = 1000
 let tail = 0
 let direction = width // by default the snake goes down
 let appleIndex = 0
-
+let dangerIndex = 0
 let score = 0
-
+const dangerLimit = 2
+let dangerList = []
 for(let i = 0; i < 400; i++){
     let squar = document.createElement('div')
     squar.classList.add('default-squar')
@@ -29,9 +30,11 @@ function startGame(){
     currentSnake.forEach(index => squares[index].classList.remove('snake'))
     squares[currentSnake[0]].classList.remove('snake-head')
     squares[appleIndex].classList.remove('apple')
+    dangerList.forEach(index => squares[index].classList.remove('danger'))
+
     clearInterval(timer)
     currentSnake = [49,29,9]
-    
+    dangerList = []
     intervalTime = 1000
     direction = width
     score = 0
@@ -47,7 +50,8 @@ function move()
         (currentSnake[0] % width === width-1 && direction === 1) ||
         (currentSnake[0] % width === 0 && direction === -1) ||
         (currentSnake[0] - width < 0 && direction === -width) ||
-        squares[currentSnake[0] + direction].classList.contains('snake')
+        squares[currentSnake[0] + direction].classList.contains('snake') ||
+        squares[currentSnake[0] + direction].classList.contains('danger')
     ){
         return clearInterval(timer)
     }
@@ -56,17 +60,21 @@ function move()
     squares[currentSnake[0]].classList.remove('snake-head')
     currentSnake.unshift(currentSnake[0] + direction) //add to snake array according to direction
     
-    if(squares[currentSnake[0]].classList.contains('apple')){
+    if(squares[currentSnake[0]].classList.contains('apple')){//hit the apple
         squares[currentSnake[0]].classList.remove('apple')
         squares[tail].classList.add('snake')
         currentSnake.push(tail)
+        score++
         generateApple()
-        
+        if(score % dangerLimit === 0){//for every 5 scores, add one danger point
+            generateDangerPoint()
+        }
         intervalTime = intervalTime * 0.9
         clearInterval(timer)
         timer = setInterval(move,intervalTime)
-        score++
+        
         scoreDiv.textContent = score;
+        
     }
     squares[currentSnake[0]].classList.add('snake')
     squares[currentSnake[0]].classList.add('snake-head')
@@ -92,4 +100,14 @@ function generateApple(){
         appleIndex = Math.floor(Math.random() * 400 )
     }while(squares[appleIndex].classList.contains('snake'))
     squares[appleIndex].classList.add('apple')
+}
+function generateDangerPoint(){
+    do{
+        dangerIndex = Math.floor(Math.random() * 400 )
+    }while(squares[dangerIndex].classList.contains('snake') && 
+            squares[dangerIndex].classList.contains('apple') && 
+            squares[dangerIndex].classList.contains('danger')
+        )
+    squares[dangerIndex].classList.add('danger')
+    dangerList.push(dangerIndex)
 }
