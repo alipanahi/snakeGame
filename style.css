@@ -1,0 +1,60 @@
+body{
+    margin: 10px;
+    padding: 10px;
+}
+section{
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    border: solid 1px burlywood;
+}
+h1{
+    color: blueviolet;
+    text-align: center;
+}
+h2{
+    color: darkblue;
+    text-align: center;
+}
+button{
+    padding: 10px 15px;
+    background: cornflowerblue;
+    color: cornsilk;
+    font-size: 15px;
+    font-weight: bold;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    margin: 0 auto;
+    border: solid 1px cornflowerblue;
+    border-radius: 5px;
+    
+}
+
+#grid{
+    border: solid 1px black;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 70px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.default-squar{
+    width: 20px;
+    height: 20px;
+}
+.snake{
+    background: darkgreen;
+    
+}
+.apple{
+    background: blueviolet;
+    
+}
+.snake-head{
+    background: chartreuse;
+}
+p{
+    margin-bottom: 0;
+}
