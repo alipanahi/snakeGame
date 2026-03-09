@@ -1,12 +1,24 @@
+
+:root {
+        --default-squar-width: 20px;
+        --default-squar-height: 20px;
+        --grid-box-width: 400px;
+    }
 body{
     margin: 10px;
     padding: 10px;
 }
-section{
-    position: relative;
-    max-width: 500px;
+.header{
+    display: flex;
+    flex-direction: column;
+    
+    max-width: 30%;
     margin: 0 auto;
-    border: solid 1px burlywood;
+    
+}
+section{
+    max-width: var(--grid-box-width);
+    margin: 0 auto;
 }
 h1{
     color: blueviolet;
@@ -15,6 +27,11 @@ h1{
 h2{
     color: darkblue;
     text-align: center;
+}
+#error{
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
 button{
     padding: 10px 15px;
@@ -28,36 +45,40 @@ button{
     margin: 0 auto;
     border: solid 1px cornflowerblue;
     border-radius: 5px;
+    cursor: pointer;
     
 }
 
 #grid{
     border: solid 1px black;
-    width: 400px;
-    height: 400px;
+    width: var(--grid-box-width);
+    height: var(--grid-box-width);
     margin: 0 auto;
     margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
 }
 .default-squar{
-    width: 20px;
-    height: 20px;
+    width: var(--default-squar-width);
+    height: var(--default-squar-height);
 }
 .snake{
     background: darkgreen;
-    
+    border-radius: 3px;
 }
 .apple{
-    background: blueviolet;
+    background: url('apple.svg') no-repeat center;
+    
     
 }
 .danger{
-    background: red;
+    background: url('danger.svg') no-repeat center;
     
 }
 .snake-head{
     background: chartreuse;
+    border-radius: 7px;
+    
 }
 p{
     margin-bottom: 0;
@@ -70,4 +91,3 @@ p{
     margin: 0 auto;
     margin-top: 50px;
 }
-
