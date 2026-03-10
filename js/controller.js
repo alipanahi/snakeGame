@@ -5,7 +5,7 @@ export function initController({ getDirection, setDirection, width }) {
     const currentDirection = getDirection();
 
     if (e.keyCode === 37) { // left
-      if (lastDirection !== 1) {
+      if (lastDirection !== 1) {// prevent reversing direction
         setDirection(-1);
       }
     }
