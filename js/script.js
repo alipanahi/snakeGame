@@ -5,7 +5,7 @@ let scoreDiv = document.getElementById('score')
 const start = document.getElementById('start')
 const error = document.getElementById('error')
 const width = 20 // the width of our game
-const startSnake = Math.floor(width/2)
+const startSnake = Math.floor(width/2) // the starting point of snake, it will be in the middle of the first row
 let currentSnake = [width*2+startSnake,width+startSnake,startSnake] //the starts from top toward down (squar index)
 const squares = [] // array of all the ground boxes
 //let timer  = 0 // default timer for snake speed
@@ -15,10 +15,10 @@ let direction = width // by default the snake goes down
 let appleIndex = 0
 let dangerIndex = 0
 let score = 0
-const dangerLimit = 1 //every 2 scores, one danger point will be added
+const dangerLimit = 2 //every 2 scores, one danger point will be added
 let dangerList = []
 let difficulty = false // in hard difficulty the apple gets disapper after specific time(difficultyTimer)
-let default_speed = 1 // default speed for snake
+let default_speed = 1 // default speed for snake, 1 means 1 move per second, 2 means 2 moves per second
 const speedIncrement = 0.2 // the speed of snake will increase by this value after each apple hit
 let snake_speed = default_speed // the speed of snake, it will increase after each apple hit
 document.documentElement.style.setProperty('--default-squar-width', width + 'px');
@@ -38,20 +38,6 @@ for(let i = 0; i < width * width; i++){
 currentSnake.forEach(index => squares[index].classList.add('snake'))
 squares[currentSnake[0]].classList.add('snake-head')
 start.addEventListener('click',startGame)
-
-
-let lastRenderTime = 0
-
-let animationId
-function main(currentTime){
-    animationId = window.requestAnimationFrame(main)
-    const secondsSincelastRender = (currentTime - lastRenderTime) / 1000
-    if(secondsSincelastRender < 1/ snake_speed) return
-    
-    lastRenderTime = currentTime
-    move()
-}
-
 
 function startGame(){
     error.textContent = ''
@@ -79,6 +65,21 @@ function startGame(){
     animationId = window.requestAnimationFrame(main)
     //timer = setInterval(move,intervalTime)
 }
+
+let lastRenderTime = 0
+
+let animationId
+function main(currentTime){
+    animationId = window.requestAnimationFrame(main)// Call the main function again on the next animation frame, recursive call
+    const secondsSincelastRender = (currentTime - lastRenderTime) / 1000 // calculate the time since last render in seconds
+    if(secondsSincelastRender < 1/ snake_speed) return // if the time since last render is less than the time for one move, return and wait for the next frame
+    
+    lastRenderTime = currentTime
+    move()
+}
+
+
+
 function move()
 {
     /*
@@ -153,10 +154,21 @@ function generateDangerPoint(){
 function hideApple(){
     squares[appleIndex].style.background = 'white'
 }
-initController({
-  width,
-  getDirection: () => direction,
-  setDirection: (newDirection) => {
-    direction = newDirection;
+const controllerConfig = {
+  width: width,
+  getDirection: function() {
+    return direction // return the current direction of the snake
+  },
+  setDirection: function(newDirection) {
+    direction = newDirection
   }
-});
+}
+
+initController(controllerConfig)
+// initController({
+//   width,
+//   getDirection: () => direction,
+//   setDirection: (newDirection) => {
+//     direction = newDirection;
+//   }
+// });

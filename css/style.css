@@ -67,12 +67,12 @@ button{
     border-radius: 3px;
 }
 .apple{
-    background: url('apple.svg') no-repeat center;
+    background: url('../images/apple.svg') no-repeat center;
     
     
 }
 .danger{
-    background: url('danger.svg') no-repeat center;
+    background: url('../images/danger.svg') no-repeat center;
     
 }
 .snake-head{
