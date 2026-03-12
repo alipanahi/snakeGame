@@ -82,11 +82,6 @@ function main(currentTime){
 
 function move()
 {
-    /*
-    0 ... 19
-    20 ... 39
-    40 ... 59 
-    */
    let head = currentSnake[0]
     if((head + width >= width*width && direction === width) ||//check if snake reachs the most bottom row
         (head % width === width-1 && direction === 1) ||//check if snake reaches the most right column
@@ -98,7 +93,6 @@ function move()
         error.textContent = 'Game over !!!'
         window.cancelAnimationFrame(animationId)
         return
-        //return clearInterval(timer)
     }
     tail = currentSnake.pop() //remove last index of currentSnake array
     squares[tail].classList.remove('snake') // remove the background from tail
@@ -122,9 +116,6 @@ function move()
             generateDangerPoint()
         }
         snake_speed += speedIncrement
-        //intervalTime = intervalTime * 0.9
-        //clearInterval(timer)
-        //timer = setInterval(move,intervalTime)//recursive call
         
         scoreDiv.textContent = score;
         
@@ -138,7 +129,7 @@ function generateApple(){
     }while(squares[appleIndex].classList.contains('snake') || squares[appleIndex].classList.contains('danger'))
     squares[appleIndex].classList.add('apple')
     if(difficulty){
-        let hideId = setTimeout(hideApple,difficultyTimer)
+        setTimeout(hideApple,difficultyTimer)
     }
 }
 function generateDangerPoint(){
@@ -152,7 +143,9 @@ function generateDangerPoint(){
     dangerList.push(dangerIndex)
 }
 function hideApple(){
-    squares[appleIndex].style.background = 'white'
+    if(squares[appleIndex].classList.contains('apple')){
+        squares[appleIndex].style.background = 'white'
+    }
 }
 const controllerConfig = {
   width: width,
